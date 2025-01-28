@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GetFit's</title>
+    <script src="https://kit.fontawesome.com/f30fac2c61.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        /* Add smooth transition for mobile menu */
+        #mobile-menu {
+            transition: all 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+        
+        #mobile-menu.active {
+            max-height: 400px; /* Adjust based on content */
+        }
+    </style>
+     <script>
+        // Wrap all JavaScript in DOMContentLoaded event
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hamburger menu functionality
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            
+            if (menuBtn && mobileMenu && menuIcon) {
+                menuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('active');
+                    if (mobileMenu.classList.contains('active')) {
+                        menuIcon.innerHTML = `
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        `;
+                    } else {
+                        menuIcon.innerHTML = `
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-16 6h16" />
+                        `;
+                    }
+                });
+            }
+
+            // Close mobile menu when clicking a link
+            const mobileLinks = document.querySelectorAll('#mobile-menu a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (mobileMenu && menuIcon) {
+                        mobileMenu.classList.remove('active');
+                        menuIcon.innerHTML = `
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-16 6h16" />
+                        `;
+                    }
+                });
+            });
+        });
+
+        // Navigation highlighting functions
+        function highlightNavItem(desktopId, mobileId) {
+            // Remove highlight from all items
+            const allItems = [
+                "homes", "programs", "plans", "blogs", "contacts",
+                "homes-mobile", "programs-mobile", "plans-mobile", "blogs-mobile", "contacts-mobile"
+            ];
+            
+            allItems.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.classList.remove("text-green-500");
+                }
+            });
+
+            // Add highlight to selected items
+            const desktopElement = document.getElementById(desktopId);
+            const mobileElement = document.getElementById(mobileId);
+            
+            if (desktopElement) desktopElement.classList.add("text-green-500");
+            if (mobileElement) mobileElement.classList.add("text-green-500");
+        }
+
+        function home() {
+            highlightNavItem("homes", "homes-mobile");
+            
+        }
+
+        function program() {
+            highlightNavItem("programs", "programs-mobile");
+            
+        }
+
+        function plan() {
+            highlightNavItem("plans", "plans-mobile");
+        }
+
+        function blog() {
+            highlightNavItem("blogs", "blogs-mobile");
+        }
+
+        function contact() {
+            highlightNavItem("contacts", "contacts-mobile");
+        }
+
+        // Form submission function
+        function submit() {
+            const name = document.getElementById("name");
+            const number = document.getElementById("number");
+
+            if (!name || !number) return;
+
+            if (name.value === "") {
+                alert("Please Enter Name");
+            } else if (number.value === "") {
+                alert("Please Enter Number");
+            } else {
+                alert(`Thanks for Joining ${name.value}!`);
+            }
+        }
+
+        function scrollToContact(){
+            document.getElementById('contact').scrollIntoView({behavior: "smooth"})
+        }
+    </script>
+</head>
+<body class="bg-black text-white font-sans">
+    <div class="container mx-auto px-4">
+        <!-- Mobile-first Navigation -->
+        <nav class="fixed top-0 left-0 w-full bg-black shadow-lg p-4 z-50">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl text-green-500 font-bold">
+                    <h1>GetFit's</h1>
+                </div>
+                <!-- Hamburger Menu Button -->
+                <button id="menu-btn" class="lg:hidden text-white focus:outline-none p-2">
+                    <svg id="menu-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-16 6h16"></path>
+                    </svg>
+                </button>
+                <!-- Desktop Menu -->
+                <ul class="hidden lg:flex items-center space-x-6">
+                    <li><a href="#home" id="homes" class="hover:text-green-500" onclick="home()">HOME</a></li>
+                    <li><a href="#program" id="programs" class="hover:text-green-500" onclick="program()">PROGRAM</a></li>
+                    <li><a href="#plan" id="plans" class="hover:text-green-500" onclick="plan()">PLAN</a></li>
+                    <li><a href="#blog" id="blogs" class="hover:text-green-500" onclick="blog()">BLOG</a></li>
+                    <li><a href="#contact" id="contacts" class="hover:text-green-500" onclick="contact()">CONTACT US</a></li>
+                    <li><button onclick="scrollToContact()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">Join Now</button></li>
+                </ul>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden bg-black">
+                <ul class="pt-4 space-y-4">
+                    <li><a href="#home" id="homes-mobile" class="block hover:text-green-500 px-4 py-2" onclick="home()">HOME</a></li>
+                    <li><a href="#program" id="programs-mobile" class="block hover:text-green-500 px-4 py-2" onclick="program()">PROGRAM</a></li>
+                    <li><a href="#plan" id="plans-mobile" class="block hover:text-green-500 px-4 py-2" onclick="plan()">PLAN</a></li>
+                    <li><a href="#blog" id="blogs-mobile" class="block hover:text-green-500 px-4 py-2" onclick="blog()">BLOG</a></li>
+                    <li><a href="#contact" id="contacts-mobile" class="block hover:text-green-500 px-4 py-2" onclick="contact()">CONTACT US</a></li>
+                    <li class="px-4 py-2"><button onclick="scrollToContact()" class="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">Join Now</button></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Home Section -->
+        <div id="home" class="flex flex-col lg:flex-row items-center justify-center min-h-screen pt-24 lg:pt-16">
+            <div class="text-center lg:text-left lg:mr-10 w-full lg:w-1/2">
+                <h1 class="text-3xl lg:text-5xl text-green-500 font-bold">Commit To Be Fit</h1>
+                <h3 class="text-lg lg:text-xl mt-4">Once You See Result, It Becomes An Addiction</h3>
+                <p class="mt-4 text-gray-300">Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias, culpa ipsam.</p>
+                <button onclick="scrollToContact()" class="mt-4 bg-green-600 text-white px-6 py-2 rounded hover:bg-green-500">Join Now</button>
+            </div>
+            <img src="men.png" alt="" class="w-full lg:w-1/2 mt-8 lg:mt-0">
+        </div>
+
+        <!-- Program Section -->
+        <div id="program" class="py-16">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl lg:text-4xl font-bold">Our <span class="text-green-500">Program's</span></h1>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+                <div class="text-center w-full max-w-sm">
+                    <img src="dance.webp" alt="Dance" class="w-full hover:scale-105 transition-transform duration-300">
+                    <h3 class="mt-4 text-xl">Dance</h3>
+                </div>
+                <div class="text-center w-full max-w-sm">
+                    <img src="cardio.webp" alt="Cardio" class="w-full hover:scale-105 transition-transform duration-300">
+                    <h3 class="mt-4 text-xl">Cardio</h3>
+                </div>
+                <div class="text-center w-full max-w-sm">
+                    <img src="heavy.webp" alt="Heavy Weight" class="w-full hover:scale-105 transition-transform duration-300">
+                    <h3 class="mt-4 text-xl">Heavy Weight</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plan Section -->
+        <div id="plan" class="py-16 bg-gray-800">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl lg:text-4xl font-bold">Our <span class="text-green-500">Plan's</span></h1>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+                <div class="bg-gray-900 p-6 rounded-lg text-center w-full max-w-sm">
+                    <i class="fa-solid fa-bookmark text-2xl text-orange-500"></i>
+                    <h3 class="text-green-500 mt-4 text-xl">Basic Package</h3>
+                    <h1 class="text-green-400 mt-4 text-2xl">30 Day in $10</h1>
+                    <p class="text-gray-400 mt-4">No Personal Trainer</p>
+                    <p class="text-gray-400">Valid for 30 Days</p>
+                    <p class="text-gray-400">Full Day valid</p>
+                    <button onclick="scrollToContact()" class="mt-6 bg-orange-600 text-white px-6 py-2 rounded hover:bg-orange-500">Buy Plan</button>
+                </div>
+                <!-- Additional plan cards with same structure -->
+                <div class="bg-gray-900 p-6 rounded-lg text-center w-full max-w-sm">
+                    <i class="fa-solid fa-bookmark text-2xl text-orange-500"></i>
+                    <h3 class="text-green-500 mt-4 text-xl">Premium Package</h3>
+                    <h1 class="text-green-400 mt-4 text-2xl">30 Day in $20</h1>
+                    <p class="text-gray-400 mt-4">Personal Trainer</p>
+                    <p class="text-gray-400">Valid for 30 Days</p>
+                    <p class="text-gray-400">Full Day valid</p>
+                    <button onclick="scrollToContact()" class="mt-6 bg-orange-600 text-white px-6 py-2 rounded hover:bg-orange-500">Buy Plan</button>
+                </div>
+                <div class="bg-gray-900 p-6 rounded-lg text-center w-full max-w-sm">
+                    <i class="fa-solid fa-bookmark text-2xl text-orange-500"></i>
+                    <h3 class="text-green-500 mt-4 text-xl">Diamond Package</h3>
+                    <h1 class="text-green-400 mt-4 text-2xl">30 Day in $30</h1>
+                    <p class="text-gray-400 mt-4">Personal Trainer</p>
+                    <p class="text-gray-400">Valid for 30 Days</p>
+                    <p class="text-gray-400">Full Day valid</p>
+                    <button onclick="scrollToContact()" class="mt-6 bg-orange-600 text-white px-6 py-2 rounded hover:bg-orange-500">Buy Plan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Section -->
+        <div id="blog" class="py-16">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl lg:text-4xl font-bold">Our <span class="text-green-500">Blog's</span></h1>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+                <div class="bg-gray-900 p-4 rounded-lg w-full max-w-sm">
+                    <img src="blog1.jpg" alt="" class="w-full rounded-t-lg">
+                    <div class="mt-4">
+                        <h3 class="text-xl">How To Make Abs?</h3>
+                        <p class="text-gray-400 mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <a href="https://www.insider.com/guides/health/fitness/how-to-get-abs" class="inline-block mt-4 text-green-500 hover:underline">Read More</a>
+                    </div>
+                </div>
+                <!-- Additional blog cards -->
+                <div class="bg-gray-900 p-4 rounded-lg w-full max-w-sm">
+                    <img src="blog5.jpg" alt="" class="w-full rounded-t-lg">
+                    <div class="mt-4">
+                        <h3 class="text-xl">How To Make Abs?</h3>
+                        <p class="text-gray-400 mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <a href="https://www.insider.com/guides/health/fitness/how-to-get-abs" class="inline-block mt-4 text-green-500 hover:underline">Read More</a>
+                    </div>
+                </div>
+                <div class="bg-gray-900 p-4 rounded-lg w-full max-w-sm">
+                    <img src="blog4.jpg" alt="" class="w-full rounded-t-lg">
+                    <div class="mt-4">
+                        <h3 class="text-xl">How To Make Abs?</h3>
+                        <p class="text-gray-400 mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <a href="https://www.insider.com/guides/health/fitness/how-to-get-abs" class="inline-block mt-4 text-green-500 hover:underline">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div id="contact" class="py-16 bg-gray-800">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl lg:text-4xl font-bold">Let's <span class="text-green-500">Begin ...</span></h1>
+                <h2 class="text-xl lg:text-2xl">Contact <span class="text-green-500">US</span></h2>
+            </div>
+            <div class="flex flex-col lg:flex-row items-center justify-center gap-8">
+                <div class="text-center lg:text-left">
+                    <h1 class="text-green-500 text-3xl lg:text-4xl">Let's Go...</h1>
+                    <h2 class="text-lg lg:text-xl mt-4">Start Your Journey Now!</h2>
+                </div>
+                <img src="girl.png" alt="" class="w-full max-w-md lg:w-1/2">
+            </div>
+            <div class="text-center mt-8">
+                <h1 class="text-2xl">Contact Us</h1>
+                <div class="flex flex-col items-center space-y-4 mt-4">
+                    <input type="text" id="name" placeholder="Enter Your Name" class="w-full max-w-sm p-2 border rounded text-black">
+                    <input type="number" id="number" placeholder="Enter Your Number" class="w-full max-w-sm p-2 border rounded text-black">
+                    <button onclick="submit()" class="w-full max-w-sm bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500">Submit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="py-8 bg-black text-center text-gray-400">
+            <p>&copy; 2025 GetFit's. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
